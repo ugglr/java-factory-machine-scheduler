@@ -1,43 +1,63 @@
 package schedule;
 
+import java.util.LinkedList;
+
 public class Machine {
+	private int nbr;
+	private LinkedList<Job> jobs; 
+	private Job currentJob;
+	private int totTime;
 	
-	/** Skapar maskin nr nbr. */
+	/** Creates a machine with the number nbr. */
 	public Machine(int nbr) {
-	
+		this.nbr = nbr;
 	}
 
-	/** Tar reda på maskinens nr. */
+	/** Returns the machines number. */
 	public int getNbr() {
-		return 0;
+		return this.nbr;
 	}	
 
 
-	/** Tilldelar maskinen jobbet j. */
+	/** assigns the machine a job */
 	public void assignJob(Job j) {
-		
+		jobs = new LinkedList<Job>();
+		if(currentJob == null) {
+			currentJob = j;
+			totTime = j.getTime();
+		} else {
+			totTime += j.getTime();
+			jobs.addLast(j);
+		}		
 	}
 	
-	/** Tar bort alla jobb från maskinen. */
+	/** Removes all jobs from the machine. */
 	public void clearJobs() {
-		
+		jobs.clear();		
 	}
 	
-	/** Tar bort och returnerar nästa jobb som maskinen ska utföra. 
-	 	Returnerar null om maskinen inte har några jobb. */
+	/** Removes and returns the next job the machine shall process. 
+	 	Returns null if the machine does not have any jobs. */
 	public Job getNextJob() {
-		return null;
+		if(currentJob == null) {
+			return null;
+		} else {
+			Job tmp = jobs.peekFirst();
+			currentJob = tmp;
+			totTime -= tmp.getTime();
+			return jobs.poll();
+		}
 	}
 	
-	/** Tar reda på den totala tiden för maskinens jobb. */
+	/** Returns the total time for the machines jobs. */
 	public int getTotalTime() {
-		return 0;
+		return totTime;
 	}
 	
-	/** Returnerar en sträng som innehåller maskinens nr samt maskinens
-    schemalagda jobb inom [] med kommatecken mellan. */
+	/** Returns a String which contains the machine number and the 
+	 * scheduled jobs within [] with comma signs in between.*/
 	public String toString() {
-		return null;
+		return Integer.toString(nbr) + jobs.toString();
 	}
 	
 }

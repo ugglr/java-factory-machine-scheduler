@@ -5,12 +5,13 @@ import java.util.LinkedList;
 public class Machine {
 	private int nbr;
 	private LinkedList<Job> jobs; 
-	private Job currentJob;
 	private int totTime;
 	
 	/** Creates a machine with the number nbr. */
 	public Machine(int nbr) {
 		this.nbr = nbr;
+		jobs = new LinkedList<Job>();
+		totTime = 0;
 	}
 
 	/** Returns the machines number. */
@@ -21,31 +22,24 @@ public class Machine {
 
 	/** assigns the machine a job */
 	public void assignJob(Job j) {
-		jobs = new LinkedList<Job>();
-		if(currentJob == null) {
-			currentJob = j;
-			totTime = j.getTime();
-		} else {
-			totTime += j.getTime();
-			jobs.addLast(j);
-		}		
+		jobs.add(j);
+		totTime += j.getTime();
 	}
 	
 	/** Removes all jobs from the machine. */
 	public void clearJobs() {
-		jobs.clear();		
+		jobs.clear();
+		totTime = 0;
 	}
 	
 	/** Removes and returns the next job the machine shall process. 
 	 	Returns null if the machine does not have any jobs. */
 	public Job getNextJob() {
-		if(currentJob == null) {
+		if(jobs.isEmpty()) {
 			return null;
 		} else {
-			Job tmp = jobs.peekFirst();
-			currentJob = tmp;
-			totTime -= tmp.getTime();
-			return jobs.poll();
+			totTime -= jobs.getFirst().getTime();
+			return jobs.getFirst();
 		}
 	}
 	

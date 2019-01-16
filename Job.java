@@ -2,23 +2,26 @@ package schedule;
 
 
 public class Job {
+	private String name;
+	private int time;
 	
-	/** Skapar ett jobb med namnet name som tar 
-	    tiden time att utföra. */
+	/** Creates a job with the name name which take the 
+	 * int time to complete the job. */
 	public Job(String name, int time) {
-		
+		this.name = name;
+		this.time = time;
 	}
 	
-	/** Returnerar jobbets tidsåtgång. */
+	/** Returns the the processing time for this job. */
 	public int getTime() {
-		return 0;
+		return this.time;
 	}
 	
 
-	/** Returnerar en sträng som representerar jobbet
-	 	på formen namn (tidsåtgång). */
+	/** Returns a String which represents the job
+	 	on the form: name (time to process). */
 	public String toString() {
-		return null;
+		return name + "(" + time + ")";
 	}
 	
 }
